@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BanaBite — Pesan Sekarang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon"><img src="banabitee.PNG" alt="BanaBitee Logo" width="50"></div>
+      BANA <span>BITE</span>
+    </a>
+    <div class="header-right">
+      <button class="cart-btn" onclick="toggleCart()">
+        🛒 Keranjang
+        <div class="cart-count" id="cartCount">0</div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <h1>BANA<span>BITE</span></h1>
+  <p>Aneka Olahan Pisang Dengan Topping Yang Nikmat!</p>
+  <button class="cart-btn" onclick="toggleCart()">
+    Pesan Sekarang →
+  </button>
+  <div class="hero-flames"></div>
+</div>
+
+<!-- ===== LOCATION BAR ===== -->
+<div class="location-bar">
+  <div class="location-inner">
+    <div class="location-select">📍 Tangerang, Banten</div>
+  </div>
+</div>
+
+<!-- ===== MAIN LAYOUT ===== -->
+<div class="main">
+
+  <!-- SIDEBAR KATEGORI -->
+  <div class="sidebar">
+    <div class="sidebar-title">Kategori</div>
+    <div class="cat-item active" onclick="filterCat('all', this)">
+      <span class="cat-emoji">🍽️</span> Semua Menu
+    </div>
+    <div class="cat-item" onclick="filterCat('mie', this)">
+      <span class="cat-emoji">🍜</span> Mie Pilihan
+    </div>
+    <div class="cat-item" onclick="filterCat('topping', this)">
+      <span class="cat-emoji">🥚</span> Topping
+    </div>
+    <div class="cat-item" onclick="filterCat('minuman', this)">
+      <span class="cat-emoji">🧃</span> Minuman
+    </div>
+  </div>
+
+  <!-- MENU SECTION -->
+  <div class="menu-section">
+
+    <!-- PROMO BANNERS -->
+    <div class="promo-banners">
+      <div class="promo-banner red">
+        <div class="promo-banner-icon">🔥</div>
+        <div class="promo-banner-text">
+          <div class="promo-banner-title">Gratis Topping</div>
+          <div class="promo-banner-sub">Min. order Rp 50.000</div>
+        </div>
+      </div>
+      <div class="promo-banner green">
+        <div class="promo-banner-icon">🎉</div>
+        <div class="promo-banner-text">
+          <div class="promo-banner-title">Diskon 20%</div>
+          <div class="promo-banner-sub">Order pertama kamu — Kode: DISKON20</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIE PILIHAN -->
+    <div class="menu-category" data-cat="mie">
+      <div class="cat-header">
+        <span class="cat-emoji">🍌</span>
+        <h2>Menu Pilihan</h2>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card" onclick="openModal('Crunchy Bunchy Nugget','pisang goreng dengan dilapisi tepung panir yang crispy!',15000,'mie',true)">
+          <div class="menu-img" style="background-image: url('bananacruchy.jpeg');">
+            <div class="bestseller-badge">⭐ Best Seller</div>
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Crunchy Bunchy Nugget</div>
+            <div class="menu-desc">Pisang Goreng Dengan Dilapisi Tepung Panir Yang Crispy</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 15.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Crunchy Bunchy Nugget',15000,'')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Mie Setan','Mie super pedas dengan level hingga level 5. Tantang dirimu!','🔥',18000,'mie',true)">
+          <div class="menu-img" style="background-image: url('boomtrifle.jpeg');">
+            <div class="bestseller-badge">⭐ Best Seller</div>
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Banana Boom Trifle</div>
+            <div class="menu-desc">Layer dessert mewah dengan krim lembut, pisang segar, dan biskuit renyah.</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 20.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Banana Boom Trifle',20000,'')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Sushi nana Roll','Irisan pisang coklat premium dengan sensasi taburan kacang dan wijen.',20000,'mie',false)">
+          <div class="menu-img" style="background-image: url('sushibanana.jpeg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Sushi nana Roll</div>
+            <div class="menu-desc">Irisan pisang coklat premium dengan sensasi taburan kacang dan wijen.</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 20.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Sushi nana Roll',20000,'')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Banana Nice Cream Bowl','Scoop es krim pisang lembut dengan taburan bubuk coklat, kacang kenari, dan irisan pisang segar.','🍳',17000,'mie',true)">
+          <div class="menu-img" style="background-image: url('bananabowl.jpeg');">
+            <div class="bestseller-badge">⭐ Best Seller</div>
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Banana Nice Cream Bowl</div>
+            <div class="menu-desc">Scoop es krim pisang lembut dengan taburan bubuk coklat, kacang kenari, dan irisan pisang segar.</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 17.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Banana Nice Cream Bowl',17000,'')">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOPPING -->
+    <div class="menu-category" data-cat="topping">
+      <div class="cat-header">
+        <span class="cat-emoji">🌌</span>
+        <h2>Topping Tambahan</h2>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card" onclick="openModal('Coklat','Taburan coklat lembut di atas es krim.',5000,'topping',false)">
+          <div class="menu-img" style="background-image: url('cokoleto.jpeg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Coklat</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 5.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Coklat',5000,'')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Keju','Taburan keju lembut di atas es krim.',5000,'topping',false)">
+          <div class="menu-img" style="background-image: url('keju.jpg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Keju</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 5.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Keju',5000,'')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Taro','Taro berkualitas tinggi.',6000,'topping',false)">
+          <div class="menu-img" style="background-image: url('taro.jpeg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Taro</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 6.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Taro',6000,'')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Matcha','Matcha hijau berkualitas tinggi.',5000,'topping',false)">
+          <div class="menu-img" style="background-image: url('matcha.jpg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Matcha</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 5.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Matcha',5000,'')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Tiramisu','Tiramisu lezat dengan lapisan kopi dan keju.',5000,'topping',false)">
+          <div class="menu-img" style="background-image: url('tiramisu.jpg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Tiramisu</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 5.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Tiramisu',5000,'')">+</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MINUMAN -->
+    <div class="menu-category" data-cat="minuman">
+      <div class="cat-header">
+        <span class="cat-emoji">🧃</span>
+        <h2>Minuman Segar</h2>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card" onclick="openModal('Es Teh Manis','Teh manis dingin, segar dan legit.','🍵',5000,'minuman',false)">
+          <div class="menu-img" style="background-image: url('manis.jpg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Es Teh Manis</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 5.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Es Teh Manis',5000,'🍵')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Es Jeruk','Jeruk segar diperas, manis asam segar.','🍊',8000,'minuman',false)">
+          <div class="menu-img" style="background-image: url('jeruk.jpg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Es Jeruk</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 8.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Es Jeruk',8000,'🍊')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Es Lemon Tea','Teh lemon segar dengan es batu, pelepas dahaga.','🍋',10000,'minuman',false)">
+          <div class="menu-img" style="background-image: url('leemon.JPEG');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Es Lemon Tea</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 10.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Es Lemon Tea',10000,'🍋')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card" onclick="openModal('Air Mineral','Air mineral 600ml.','💧',4000,'minuman',false)">
+          <div class="menu-img" style="background-image: url('mineral.jpg');">
+          </div>
+          <div class="menu-info">
+            <div class="menu-name">Air Mineral</div>
+            <div class="menu-footer">
+              <div class="menu-price">Rp 4.000</div>
+              <button class="add-btn" onclick="event.stopPropagation(); quickAdd('Air Mineral',4000,'💧')">+</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  <!-- END MENU SECTION -->
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <div class="cart-title">🛒 Pesanan Kamu</div>
+      <div class="cart-items-count" id="cartItemsCount">0 item</div>
+    </div>
+    <div id="cartContent">
+      <div class="cart-empty" id="cartEmpty">
+        <div class="cart-empty-icon"></div>
+        <p>Belum ada pesanan</p>
+        <p class="cart-empty-sub">Tambahkan menu favoritmu!</p>
+      </div>
+    </div>
+    <div class="cart-summary" id="cartSummary" style="display:none">
+      <div class="promo-row">
+        <input class="promo-input" id="promoInput" type="text" placeholder="Kode promo...">
+        <button class="promo-btn" onclick="applyPromo()">Pakai</button>
+      </div>
+      <div class="cart-row"><span>Subtotal</span><span class="val" id="subtotalVal">Rp 0</span></div>
+      <div class="cart-row"><span>Ongkir</span><span class="val" id="deliveryVal">Rp 5.000</span></div>
+      <div class="cart-row cart-row--discount" id="discountRow" style="display:none">
+        <span>Diskon</span><span class="val" id="discountVal">- Rp 0</span>
+      </div>
+      <div class="cart-row cart-row--total"><span>Total</span><span class="val" id="totalVal">Rp 0</span></div>
+      <textarea class="notes-input" id="notesInput" rows="2" placeholder="Catatan pesanan (opsional)..."></textarea>
+      <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">Pesan Sekarang 🔥</button>
+    </div>
+  </div>
+
+</div>
+<!-- END MAIN -->
+
+
+
+<!-- ===== SUCCESS MODAL ===== -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">🎉</div>
+    <h2>Pesanan Berhasil!</h2>
+    <p>Pesananmu sedang diproses. Tunggu sebentar ya!</p>
+    <div class="order-id" id="orderId">#MIE-12345</div>
+    <button class="success-close" onclick="closeSuccess()">Oke, Makasih! 🍜</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

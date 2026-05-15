@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Admin BanaBite</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 p-6">
+
+  <h1 class="text-3xl font-bold mb-6">Dashboard Pesanan</h1>
+
+  <div id="orders" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+  <script>
+    // 🔐 cek login
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = 'login.html';
+    }
+
+    function loadOrders() {
+      fetch('http://localhost:3000/api/orders', {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Unauthorized / gagal ambil data");
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log("DATA:", data);
+
+        const container = document.getElementById('orders');
+        container.innerHTML = '';
+
+        data.forEach(order => {
+          const div = document.createElement('div');
+
+          div.className = `
+            bg-white rounded-2xl p-5 shadow-md 
+            hover:shadow-xl transition duration-300 
+            fade-in
+          `;
+
+          const statusColor =
+            order.status === 'selesai'
+              ? 'bg-green-100 text-green-700'
+              : 'bg-yellow-100 text-yellow-700';
+
+          div.innerHTML = `
+            <div class="flex justify-between items-center">
+              <h2 class="font-semibold text-lg">Order #${order.id}</h2>
+              <span class="px-3 py-1 rounded-full text-sm font-medium ${statusColor}">
+                ${order.status || 'pending'}
+              </span>
+            </div>
+
+            <p class="text-gray-500 mt-1">Total: Rp ${order.total}</p>
+
+            <div class="mt-3 space-y-1 text-sm">
+              ${order.items.map(i => `
+                <div class="flex justify-between">
+                  <span>${i.name}</span>
+                  <span>x${i.qty}</span>
+                </div>
+              `).join('')}
+            </div>
+
+            ${order.status !== 'selesai' ? `
+              <button onclick="updateStatus(${order.id})"
+                class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition duration-200">
+                Tandai Selesai
+              </button>
+            ` : `
+              <div class="mt-4 text-center text-green-600 font-semibold">
+                ✔ Selesai
+              </div>
+            `}
+          `;
+
+          container.appendChild(div);
+        });
+      })
+      .catch(err => {
+        console.error("ERROR:", err);
+      });
+    }
+
+    function updateStatus(id) {
+      fetch(`http://localhost:3000/api/order/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ status: 'selesai' })
+      })
+      .then(() => loadOrders());
+    }
+
+    setInterval(loadOrders, 3000);
+    loadOrders();
+  </script>
+
+</body>
+</html>
